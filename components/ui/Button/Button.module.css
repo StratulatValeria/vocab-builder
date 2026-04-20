@@ -1,0 +1,30 @@
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+}
+
+/*  Primary (Зелена) */
+.primary {
+  background-color: var(--brand-green);
+  color: var(--brand-light);
+}
+
+/*  Outline (Для Cancel) */
+.outline {
+  background-color: transparent;
+  border: 1px solid var(--brand-green);
+  color: var(--brand-green);
+}
+
+.btn:hover {
+  opacity: 0.85;
+}

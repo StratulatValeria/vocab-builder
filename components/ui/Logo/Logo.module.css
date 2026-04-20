@@ -1,0 +1,37 @@
+.logoLink {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-decoration: none;
+}
+
+.logoIcon {
+  width: 36px;
+  height: 36px;
+  color: var(--brand-green);
+}
+
+.logoText {
+  /* font-family: "Fixel Display", sans-serif; */
+  color: var(--brand-black);
+  transition: color 0.3s ease;
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 133%;
+}
+
+.logoLink:hover .logoText {
+  color: var(--brand-green);
+}
+
+@media (min-width: 768px) {
+  .logoIcon {
+    width: 40px;
+    height: 40px;
+  }
+  .logoText {
+    font-size: 22px;
+    line-height: 145%;
+  }
+}
