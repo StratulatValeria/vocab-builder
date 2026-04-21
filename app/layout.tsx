@@ -59,7 +59,8 @@ export default function RootLayout({
       <body
         className={`${fixelDisplay.variable} ${sfPro.variable} font-sans antialiased bg-brand-gray text-brand-black`}
       >
-        {children}
+    
+        <main className="pt-[88px]">{children}</main>
       </body>
     </html>
   );

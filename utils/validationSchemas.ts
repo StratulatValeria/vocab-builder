@@ -1,19 +1,17 @@
 import * as Yup from "yup";
 
+const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 export const registerSchema = Yup.object().shape({
-  name: Yup.string().required("Name is required").min(2, "Name is too short"),
-  email: Yup.string()
-    .matches(
-      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
-      "Invalid email format",
-    )
-    .required("Email is required"),
-  password: Yup.string()
-    .matches(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-      "Password must contain uppercase, lowercase and number",
-    )
-    .required("Password is required"),
+  name: Yup.string().required("Name is required"),
+  email: Yup.string().matches(emailRegex, "Invalid email").required("Required"),
+  password: Yup.string().required("Required").min(7).max(7),
+});
+
+export const loginSchema = Yup.object().shape({
+  email: Yup.string().matches(emailRegex, "Invalid email").required("Required"),
+  password: Yup.string().required("Required"),
 });
 
 export type RegisterFormData = Yup.InferType<typeof registerSchema>;
+export type LoginFormData = Yup.InferType<typeof loginSchema>;

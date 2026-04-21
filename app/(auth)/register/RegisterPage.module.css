@@ -1,0 +1,70 @@
+.container {
+  min-height: 100vh;
+  background-color: #f8f8f8;
+  padding: 60px 100px;
+  position: relative;
+}
+
+.logoWrapper {
+  margin-bottom: 80px;
+}
+
+.contentWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+}
+
+.formCard {
+  width: 627px;
+  height: 591px;
+  background: rgba(133, 170, 159, 0.1);
+  border-radius: 30px;
+  padding: 64px;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  font-family: var(--font-family);
+  font-weight: 600;
+  font-size: 40px;
+  line-height: 120%;
+  letter-spacing: -0.02em;
+  color: var(--black);
+  margin-bottom: 20px;
+}
+
+.subtitle {
+  font-family: var(--font-family);
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 150%;
+  color: rgba(18, 20, 23, 0.8);
+}
+
+.imageSection {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.imageLabels {
+  margin-top: 16px;
+  color: rgba(18, 20, 23, 0.5);
+  font-size: 16px;
+}
+
+.loginLink {
+  margin-top: auto;
+  text-align: center;
+  font-weight: 700;
+  color: rgba(18, 20, 23, 0.5);
+  text-decoration: underline;
+}
+
+.textSection {
+  margin-bottom: 32px;
+}

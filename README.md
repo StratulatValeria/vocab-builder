@@ -19,3 +19,7 @@ error={errors.password?.message}
   onChange={setSelected} 
   className={styles.categoriesSelect} 
 />
+
+<Modal isOpen={isAddOpen} onClose={closeAdd}>
+   <AddWordForm /> {/*  начинка */}
+</Modal>

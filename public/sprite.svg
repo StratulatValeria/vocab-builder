@@ -37,6 +37,10 @@
       <circle cx="16" cy="16" r="16" fill="#85aa9f" />
       <path fill="#fcfcfc" d="M16.354 15.2c4.755-3.586 4.965-5.76 0-9.6-5.060 3.922-4.408 6.001 0 9.6zM15.2 16.446c-3.586-4.755-5.76-4.965-9.6 0 3.922 5.060 6.001 4.408 9.6 0zM27.2 16.446c-3.586-4.755-5.76-4.965-9.6 0 3.922 5.060 6.001 4.408 9.6 0zM16.354 27.2c4.755-3.586 4.965-5.76 0-9.6-5.060 3.922-4.408 6.001 0 9.6z"></path>
     </symbol>
+    <symbol id="icon-x" viewBox="0 0 30 32">
+<path fill="none" stroke="#fcfcfc" style="stroke: var(--color1, #fcfcfc)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.3529" d="M22.588 7.529l-15.059 15.059"></path>
+<path fill="none" stroke="#fcfcfc" style="stroke: var(--color1, #fcfcfc)" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.3529" d="M7.529 7.529l15.059 15.059"></path>
+</symbol>
   </defs>
 </svg>
 

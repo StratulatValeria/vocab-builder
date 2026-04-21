@@ -14,7 +14,8 @@
 
 .input {
   width: 100%;
-  padding: 16px 18px;
+  /* padding: 16px 18px; */
+  padding: 16px 437px 16px 18px;
   border-radius: 15px;
   border: 1px solid var(--brand-gray);
   background: transparent;

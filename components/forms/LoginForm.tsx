@@ -1,57 +1,39 @@
 "use client";
 
-import axios from "axios";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { registerSchema, RegisterFormData } from "@/utils/validationSchemas";
+import { loginSchema, LoginFormData } from "@/utils/validationSchemas";
 import { useState } from "react";
 import { Icon } from "@/components/ui/Icon";
-import styles from "./RegisterForm.module.css";
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+import styles from "./RegisterForm.module.css";
 
-interface ApiError {
-  message: string;
-}
-
-export default function RegisterForm() {
+export default function LoginForm() {
   const [showPassword, setShowPassword] = useState(false);
-  const registerUser = useAuthStore((state) => state.register);
+  const loginUser = useAuthStore((state) => state.login);
   const router = useRouter();
 
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting },
-  } = useForm<RegisterFormData>({
-    resolver: yupResolver(registerSchema),
+  } = useForm<LoginFormData>({
+    resolver: yupResolver(loginSchema),
   });
-  const onSubmit: SubmitHandler<RegisterFormData> = async (data) => {
+  const onSubmit: SubmitHandler<LoginFormData> = async (data) => {
     try {
-      await registerUser(data);
+      await loginUser(data);
       router.push("/dictionary");
     } catch (error) {
-      if (axios.isAxiosError<ApiError>(error)) {
-        const serverMessage = error.response?.data?.message;
-        alert(serverMessage || "Registration failed");
-      } else {
-        alert("An unexpected error occurred");
+      if (axios.isAxiosError(error)) {
+        alert(error.response?.data?.message || "Login failed");
       }
     }
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
-      <div className={styles.inputWrapper}>
-        <input
-          {...register("name")}
-          placeholder="Name"
-          className={`${styles.input} ${errors.name ? styles.inputError : ""}`}
-        />
-        {errors.name && (
-          <p className={styles.errorText}>{errors.name.message}</p>
-        )}
-      </div>
-
       <div className={styles.inputWrapper}>
         <input
           {...register("email")}
@@ -87,7 +69,7 @@ export default function RegisterForm() {
         disabled={isSubmitting}
         className={styles.submitBtn}
       >
-        {isSubmitting ? "Registering..." : "Register"}
+        {isSubmitting ? "Logging in..." : "Log In"}
       </button>
     </form>
   );
