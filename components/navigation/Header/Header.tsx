@@ -15,7 +15,6 @@ export const Header = () => {
       <div className={styles.container}>
         <Logo />
 
-        {/* Показуємо навігацію тільки якщо залогінені */}
         {isLoggedIn && (
           <nav className={styles.nav}>
             <Link

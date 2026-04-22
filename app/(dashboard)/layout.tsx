@@ -6,9 +6,10 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
+    <div style={{ position: "relative", minHeight: "100vh" }}>
       <Header />
-      <main className="pt-[88px]"> {children}</main>
-    </>
+
+      <main style={{ marginTop: "88px" }}>{children}</main>
+    </div>
   );
 }
