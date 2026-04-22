@@ -1,0 +1,49 @@
+.tableContainer {
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 18px;
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.thead {
+  border-bottom: 2px solid #dbdbdb;
+}
+
+.th {
+  padding: 12px 18px;
+  font-weight: 600;
+  font-size: 16px;
+  color: #121417;
+}
+
+.td {
+  padding: 20px 18px;
+  border-bottom: 1px solid #dbdbdb;
+  font-size: 16px;
+  color: #121417;
+  vertical-align: middle;
+}
+
+.progressWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+}
+
+.actionBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+}

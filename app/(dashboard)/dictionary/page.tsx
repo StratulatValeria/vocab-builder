@@ -3,6 +3,7 @@
 // import { useAuthStore } from "@/lib/store/useAuthStore";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./DictionaryPage.module.css";
+import { WordsTable } from "@/components/shared/WordsTable";
 
 export default function DictionaryPage() {
   // const user = useAuthStore((state) => state.user);
@@ -54,7 +55,7 @@ export default function DictionaryPage() {
 
       {/* Таблиця */}
       <div className="bg-white rounded-[30px] min-h-[400px]">
-        {/* Контент таблиці */}
+        <WordsTable />
       </div>
     </div>
   );
