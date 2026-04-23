@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import QueryProvider from "@/providers/QueryProvider";
 
 const fixelDisplay = localFont({
   src: [
@@ -59,7 +60,7 @@ export default function RootLayout({
       <body
         className={`${fixelDisplay.variable} ${sfPro.variable} font-sans antialiased`}
       >
-        {children}
+        <QueryProvider>{children}</QueryProvider>
       </body>
     </html>
   );
