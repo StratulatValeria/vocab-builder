@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export const api = axios.create({
-  baseURL: "https://vocab-builder-backend.p.goit.global",
+ baseURL: process.env.NEXT_PUBLIC_API_URL,
 });
 
 export const setAuthHeader = (token: string) => {
