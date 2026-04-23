@@ -3,6 +3,7 @@
   background-color: #f8f8f8;
   padding: 60px 100px;
   position: relative;
+  overflow-x: hidden;
 }
 
 .logoWrapper {
@@ -14,6 +15,34 @@
   align-items: center;
   justify-content: space-between;
   gap: 80px;
+  position: relative;
+}
+.contentWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 80px;
+}
+
+.vectorBackdrop {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+
+  z-index: 0;
+  pointer-events: none;
+
+  width: 564px;
+  height: 466px;
+  mix-blend-mode: multiply;
+  opacity: 1;
+}
+
+.vectorBackdrop svg {
+  width: 100%;
+  display: block;
+  height: 100%;
 }
 
 .formCard {
@@ -24,6 +53,8 @@
   padding: 64px;
   display: flex;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
 }
 
 .title {
@@ -49,6 +80,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .imageLabels {

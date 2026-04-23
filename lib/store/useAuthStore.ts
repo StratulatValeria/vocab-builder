@@ -24,20 +24,20 @@ export const useAuthStore = create<AuthState>()(
       isLoggedIn: false,
 
       register: async (credentials) => {
-        const { data } = await api.post("/api/users/signup", credentials);
+        const { data } = await api.post("/users/signup", credentials);
         setAuthHeader(data.token);
         set({ user: data.user, token: data.token, isLoggedIn: true });
       },
 
       login: async (credentials) => {
-        const { data } = await api.post("/api/users/signin", credentials);
+        const { data } = await api.post("/users/signin", credentials);
         setAuthHeader(data.token);
         set({ user: data.user, token: data.token, isLoggedIn: true });
       },
 
       logout: async () => {
         try {
-          await api.post("/api/users/signout");
+          await api.post("/users/signout");
         } finally {
           clearAuthHeader();
           set({
