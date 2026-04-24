@@ -1,12 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import { api, setAuthHeader, clearAuthHeader } from "../api/client";
-import { RegisterCredentials, LoginCredentials } from "../type/types";
-
-interface User {
-  name: string | null;
-  email: string | null;
-}
+import { RegisterCredentials, LoginCredentials, User } from "../type/types";
 
 interface AuthState {
   user: User;
@@ -15,11 +10,13 @@ interface AuthState {
   register: (credentials: RegisterCredentials) => Promise<void>;
   login: (credentials: LoginCredentials) => Promise<void>;
   logout: () => Promise<void>;
+  refresh: () => void;
 }
+
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
-      user: { name: null, email: null },
+    (set, get) => ({
+      user: { name: null, email: null } as User,
       token: null,
       isLoggedIn: false,
 
@@ -41,16 +38,28 @@ export const useAuthStore = create<AuthState>()(
         } finally {
           clearAuthHeader();
           set({
-            user: { name: null, email: null },
+            user: { name: null, email: null } as User,
             token: null,
             isLoggedIn: false,
           });
+          localStorage.removeItem("auth-storage");
+        }
+      },
+
+      refresh: () => {
+        const currentToken = get().token;
+        if (currentToken) {
+          setAuthHeader(currentToken);
         }
       },
     }),
     {
       name: "auth-storage",
-      partialize: (state) => ({ token: state.token }),
+      partialize: (state) => ({
+        token: state.token,
+        isLoggedIn: state.isLoggedIn,
+        user: state.user,
+      }),
     },
   ),
 );

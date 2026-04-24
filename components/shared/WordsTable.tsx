@@ -2,17 +2,25 @@ import { useWords } from "@/hooks/useWords";
 import { Word } from "@/lib/type/types";
 import styles from "./WordsTable.module.css";
 
-export const WordsTable = () => {
-  const { data, isLoading, isError } = useWords(1);
+interface WordsTableProps {
+  words: Word[];
+}
 
-  if (isLoading) return <div>Завантаження...</div>;
-  if (isError) return <div>Помилка завантаження.</div>;
+export const WordsTable = ({ words }: WordsTableProps) => {
+  if (!words || words.length === 0)
+    return <div className="p-4 text-center">Слів поки немає.</div>;
+
+  // export const WordsTable = () => {
+  //   const { data, isLoading, isError } = useWords(1);
+
+  //   if (isLoading) return <div>Завантаження...</div>;
+  //   if (isError) return <div>Помилка завантаження.</div>;
 
   return (
     <div className={styles.tableContainer}>
       <table className={styles.table}>
         <tbody>
-          {data?.results.map((word: Word) => (
+          {words.map((word: Word) => (
             <tr key={word._id}>
               <td className={styles.td}>{word.en}</td>
               <td className={styles.td}>{word.ua}</td>

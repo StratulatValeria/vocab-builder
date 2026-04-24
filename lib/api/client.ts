@@ -25,3 +25,12 @@ export const setAuthHeader = (token: string) => {
 export const clearAuthHeader = () => {
   api.defaults.headers.common.Authorization = "";
 };
+
+const storage =
+  typeof window !== "undefined" ? localStorage.getItem("auth-storage") : null;
+if (storage) {
+  const parsed = JSON.parse(storage);
+  if (parsed.state.token) {
+    setAuthHeader(parsed.state.token);
+  }
+}
