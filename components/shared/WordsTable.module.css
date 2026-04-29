@@ -12,28 +12,85 @@
 }
 
 .thead {
-  border-bottom: 2px solid #dbdbdb;
+  background-color: rgba(133, 170, 159, 0.1);
 }
 
 .th {
   padding: 12px 18px;
-  font-weight: 600;
-  font-size: 16px;
+  font-weight: 500;
+  font-size: 20px;
   color: #121417;
+  border-right: 1px solid #dbdbdb;
+}
+
+.headerContent {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tr:last-child .td {
+  border-bottom: none;
 }
 
 .td {
   padding: 20px 18px;
   border-bottom: 1px solid #dbdbdb;
-  font-size: 16px;
+  font-size: 20px;
   color: #121417;
   vertical-align: middle;
+  border-right: 1px solid #dbdbdb;
 }
 
 .progressWrapper {
   display: flex;
   align-items: center;
   gap: 8px;
+}
+.circularProgress {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid #85aa9f;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.circularProgress::after {
+  content: "";
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  background: conic-gradient(#85aa9f var(--p), transparent 0);
+  mask: radial-gradient(farthest-side, transparent calc(100% - 3px), black 0);
+  -webkit-mask: radial-gradient(
+    farthest-side,
+    transparent calc(100% - 3px),
+    black 0
+  );
+}
+
+.moreBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  color: #121417;
+  transition: color 0.2s ease;
+}
+
+.moreBtn:hover {
+  color: #85aa9f;
+}
+
+.actionsWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
 }
 
 .actions {
@@ -46,4 +103,47 @@
   border: none;
   cursor: pointer;
   padding: 4px;
+}
+
+.dropdownMenu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 100;
+  background: #ffffff;
+  box-shadow: 0px 4px 47px rgba(18, 20, 23, 0.08);
+  border-radius: 15px;
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  min-width: 120px;
+}
+.menuItem {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: none;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0;
+  color: #121417;
+  transition: opacity 0.2s;
+}
+
+.menuItem:hover {
+  opacity: 0.7;
+}
+
+.editIcon {
+  color: #85aa9f;
+}
+.deleteIcon {
+  color: #e74c3c;
+}
+.th:last-child,
+.td:last-child {
+  border-right: none;
 }
