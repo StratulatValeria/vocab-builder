@@ -6,17 +6,48 @@ import styles from "./DictionaryPage.module.css";
 import { WordsTable } from "@/components/shared/WordsTable";
 import { api } from "@/lib/api/client";
 import { Word } from "@/lib/type/types";
-import { Pagination } from "@/components/shared/Pagination/Pagination";
+import { Pagination } from "@/components/ui/Pagination/Pagination";
 import { Loader } from "@/components/Loader/Loader";
+import { Select } from "@/components/ui/Select/Select";
+
 export default function DictionaryPage() {
   const [words, setWords] = useState<Word[]>([]);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<string[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const [inputValue, setInputValue] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
   const [totalCount, setTotalCount] = useState(0);
   const limit = 7;
+
+  const categoryOptions = [
+    { value: "", label: "All " },
+    ...categories.map((cat) => ({
+      value: cat,
+      label: cat.charAt(0).toUpperCase() + cat.slice(1),
+    })),
+  ];
+
+  useEffect(() => {
+    if (inputValue.trim() === "") {
+      setSearchQuery("");
+      setCurrentPage(1);
+      return;
+    }
+
+    const handler = setTimeout(() => {
+      setSearchQuery(inputValue);
+      setCurrentPage(1);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [inputValue]);
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -35,7 +66,7 @@ export default function DictionaryPage() {
       try {
         setIsLoading(true);
         const res = await api.get(
-          `/words/all?page=${currentPage}&limit=${limit}`,
+          `/words/all?page=${currentPage}&limit=${limit}&keyword=${searchQuery}&category=${selectedCategory}`,
         );
 
         setWords(res.data.results);
@@ -49,7 +80,7 @@ export default function DictionaryPage() {
     };
 
     fetchWords();
-  }, [currentPage]);
+  }, [currentPage, searchQuery, selectedCategory]);
   return (
     <div className={styles.container}>
       <div className={styles.filtersSection}>
@@ -59,20 +90,21 @@ export default function DictionaryPage() {
               type="text"
               placeholder="Find the word"
               className={styles.input}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
             />
             <Icon id="icon-search" size={20} className={styles.searchIcon} />
           </div>
 
-          <div className={styles.inputWrapper}>
-            <select className={styles.input}>
-              <option value="">Categories</option>
-              {categories.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
-                </option>
-              ))}
-            </select>
-          </div>
+          <Select
+            options={categoryOptions}
+            value={selectedCategory}
+            onChange={(val) => {
+              setSelectedCategory(val);
+              setCurrentPage(1);
+            }}
+            className={styles.customSelect}
+          />
         </div>
 
         <div className={styles.statisticsAndActions}>

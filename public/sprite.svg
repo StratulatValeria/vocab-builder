@@ -16,9 +16,26 @@
       <path fill="currentColor" d="M16 22.003l-10-10 1.4-1.4 8.6 8.6 8.6-8.6 1.4 1.4-10 10z"></path>
     </symbol>
     <symbol id="icon-search" viewBox="0 0 32 32">
-      <path stroke="currentColor" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.4" d="M14.667 25.333c5.891 0 10.667-4.776 10.667-10.667s-4.776-10.667-10.667-10.667c-5.891 0-10.667 4.776-10.667 10.667s4.776 10.667 10.667 10.667z"></path>
-      <path stroke="currentColor" stroke-linejoin="round" stroke-linecap="round" stroke-miterlimit="4" stroke-width="2.4" d="M28 28l-5.8-5.8"></path>
-    </symbol>
+
+  <path 
+    fill="none" 
+    stroke="currentColor" 
+    stroke-linejoin="round" 
+    stroke-linecap="round" 
+    stroke-miterlimit="4" 
+    stroke-width="2.4" 
+    d="M14.667 25.333c5.891 0 10.667-4.776 10.667-10.667s-4.776-10.667-10.667-10.667c-5.891 0-10.667 4.776-10.667 10.667s4.776 10.667 10.667 10.667z"
+  ></path>
+  <path 
+    fill="none" 
+    stroke="currentColor" 
+    stroke-linejoin="round" 
+    stroke-linecap="round" 
+    stroke-miterlimit="4" 
+    stroke-width="2.4" 
+    d="M28 28l-5.8-5.8"
+  ></path>
+</symbol>
     <symbol id="icon-ukraine" viewBox="0 0 32 32">
       <path fill="#ffda44" d="M16 32c8.837 0 16-7.163 16-16s-7.163-16-16-16c-8.837 0-16 7.163-16 16s7.163 16 16 16z"></path>
       <path fill="#338af3" d="M0 16c0-8.836 7.163-16 16-16s16 7.163 16 16z"></path>

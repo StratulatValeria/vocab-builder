@@ -45,7 +45,7 @@ export const Select = ({
       <div className={styles.trigger} onClick={() => setIsOpen(!isOpen)}>
         <span>{selectedLabel}</span>
         <Icon
-          id="icon-chevron-down"
+          id="icon-select-arrow"
           size={20}
           style={{ transform: isOpen ? "rotate(180deg)" : "none" }}
         />
