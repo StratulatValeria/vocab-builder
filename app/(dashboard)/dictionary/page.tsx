@@ -6,37 +6,49 @@ import styles from "./DictionaryPage.module.css";
 import { WordsTable } from "@/components/shared/WordsTable";
 import { api } from "@/lib/api/client";
 import { Word } from "@/lib/type/types";
-
+import { Pagination } from "@/components/shared/Pagination/Pagination";
 export default function DictionaryPage() {
-  // const user = useAuthStore((state) => state.user);
-
   const [words, setWords] = useState<Word[]>([]);
   const [categories, setCategories] = useState([]);
-  const [totalWords, setTotalWords] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [totalCount, setTotalCount] = useState(0);
+  const limit = 7;
 
   useEffect(() => {
-    const fetchDictionaryData = async () => {
+    const fetchCategories = async () => {
+      try {
+        const res = await api.get("/words/categories");
+        setCategories(res.data);
+      } catch (e) {
+        console.error("Помилка категорій:", e);
+      }
+    };
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    const fetchWords = async () => {
       try {
         setIsLoading(true);
-        const [catRes, wordsRes] = await Promise.all([
-          api.get("/words/categories"),
-          api.get("/words/all?page=1&limit=7"),
-          // api.get("/words/own?page=1&limit=7"),
-        ]);
+        const res = await api.get(
+          `/words/all?page=${currentPage}&limit=${limit}`,
+        );
 
-        setCategories(catRes.data);
-        setWords(wordsRes.data.results);
-        setTotalWords(wordsRes.data.totalCount || 0);
+        setWords(res.data.results);
+        setTotalPages(res.data.totalPages || 0);
+        setTotalCount(res.data.totalCount || 0);
       } catch (error) {
-        console.error("Помилка завантаження словника", error);
+        console.error("Помилка слів:", error);
       } finally {
-        setIsLoading(false);
+        setTimeout(() => setIsLoading(false), 300);
       }
     };
 
-    fetchDictionaryData();
-  }, []);
+    fetchWords();
+  }, [currentPage]);
   return (
     <div className={styles.container}>
       <div className={styles.filtersSection}>
@@ -65,7 +77,7 @@ export default function DictionaryPage() {
         <div className={styles.statisticsAndActions}>
           <div className={styles.stats}>
             <span className="text-[#121417]/50">To study:</span>
-            <span className={styles.statsValue}>{totalWords}</span>
+            <span className={styles.statsValue}>{totalCount}</span>
           </div>
 
           <div className={styles.actionButtons}>
@@ -85,11 +97,26 @@ export default function DictionaryPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[30px] min-h-[400px]">
-        {isLoading ? (
-          <div className="p-10 text-center">Завантаження слів...</div>
-        ) : (
-          <WordsTable words={words} />
+      <div className="bg-white rounded-[30px] min-h-[400px] pb-10 relative overflow-hidden">
+        {isLoading && (
+          <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/60 backdrop-blur-[1px]">
+            <div className="flex flex-col items-center gap-2">
+              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#85AA9F]"></div>
+              <span className="text-sm text-[#121417]/50">Оновлення...</span>
+            </div>
+          </div>
+        )}
+
+        <WordsTable words={words} />
+
+        {totalPages > 1 && (
+          <div className="mt-8 flex justify-center">
+            <Pagination
+              pageCount={totalPages}
+              currentPage={currentPage}
+              onPageChange={(page) => setCurrentPage(page)}
+            />
+          </div>
         )}
       </div>
     </div>
