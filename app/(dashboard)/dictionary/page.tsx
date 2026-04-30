@@ -7,6 +7,7 @@ import { WordsTable } from "@/components/shared/WordsTable";
 import { api } from "@/lib/api/client";
 import { Word } from "@/lib/type/types";
 import { Pagination } from "@/components/shared/Pagination/Pagination";
+import { Loader } from "@/components/Loader/Loader";
 export default function DictionaryPage() {
   const [words, setWords] = useState<Word[]>([]);
   const [categories, setCategories] = useState([]);
@@ -97,20 +98,20 @@ export default function DictionaryPage() {
         </div>
       </div>
 
-      <div className="bg-white rounded-[30px] min-h-[400px] pb-10 relative overflow-hidden">
+      <div className="bg-white rounded-[30px] min-h-[450px] pb-10 relative overflow-hidden">
         {isLoading && (
-          <div className="absolute inset-0 z-20 flex items-center justify-center bg-white/60 backdrop-blur-[1px]">
-            <div className="flex flex-col items-center gap-2">
-              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-[#85AA9F]"></div>
-              <span className="text-sm text-[#121417]/50">Оновлення...</span>
+          <div className={styles.loaderOverlay}>
+            <div className={styles.loaderBookWrapper}>
+              <Loader />
             </div>
+            <p className={styles.loaderText}>Завантаження знань...</p>
           </div>
         )}
 
         <WordsTable words={words} />
 
         {totalPages > 1 && (
-          <div className="mt-8 flex justify-center">
+          <div className={styles.paginationSection}>
             <Pagination
               pageCount={totalPages}
               currentPage={currentPage}

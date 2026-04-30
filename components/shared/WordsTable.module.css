@@ -20,7 +20,8 @@
   font-weight: 500;
   font-size: 20px;
   color: #121417;
-  border-right: 1px solid #dbdbdb;
+  border-right: 1px solid rgba(18, 20, 23, 0.1);
+  border-bottom: 1px solid rgba(18, 20, 23, 0.1);
 }
 
 .headerContent {
@@ -29,17 +30,13 @@
   gap: 8px;
 }
 
-.tr:last-child .td {
-  border-bottom: none;
-}
-
 .td {
   padding: 20px 18px;
-  border-bottom: 1px solid #dbdbdb;
+  border-bottom: 1px solid rgba(18, 20, 23, 0.1);
   font-size: 20px;
   color: #121417;
   vertical-align: middle;
-  border-right: 1px solid #dbdbdb;
+  border-right: 1px solid rgba(18, 20, 23, 0.1);
 }
 
 .progressWrapper {
