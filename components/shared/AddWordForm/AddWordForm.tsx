@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useForm, Controller, useWatch } from "react-hook-form";
 import { Select } from "@/components/ui/Select/Select";
 import { Icon } from "@/components/ui/Icon";
-import styles from "./AddWordForm.module.css";
-import { IAddWordForm, AddWordFormProps } from "@/lib/type/types";
 import { Input } from "@/components/ui/Input/Input";
+import { IAddWordForm, AddWordFormProps } from "@/lib/type/types";
+import styles from "./AddWordForm.module.css";
 
 export const AddWordForm = ({
   categories,
@@ -17,8 +16,6 @@ export const AddWordForm = ({
     register,
     handleSubmit,
     control,
-    watch,
-    setValue,
     formState: { errors },
   } = useForm<IAddWordForm>({
     defaultValues: {
@@ -29,7 +26,10 @@ export const AddWordForm = ({
     },
   });
 
-  const selectedCategory = watch("category");
+  const selectedCategory = useWatch({
+    control,
+    name: "category",
+  });
 
   const onSubmit = async (data: IAddWordForm) => {
     try {
@@ -59,10 +59,10 @@ export const AddWordForm = ({
           <Controller
             name="category"
             control={control}
-            rules={{ required: true }}
+            rules={{ required: "Category is required" }}
             render={({ field }) => (
               <Select
-                options={categories.map((c) => ({
+                options={categories.map((c: string) => ({
                   value: c,
                   label: c.charAt(0).toUpperCase() + c.slice(1),
                 }))}
@@ -91,11 +91,11 @@ export const AddWordForm = ({
             </div>
           )}
 
-          {/* Поле Українська */}
           <Input
-            {...register("ua")}
+            {...register("ua", { required: "Required field" })}
             placeholder="Ukrainian"
             className={styles.modalInput}
+            error={errors.ua?.message}
             rightElement={
               <>
                 <Icon id="icon-ukraine" size={32} />
@@ -104,13 +104,12 @@ export const AddWordForm = ({
             }
           />
 
-          {/* Поле Англійська */}
           <Input
             {...register("en", {
-              required: "This field is required",
+              required: "Required field",
               pattern: {
                 value: /^[a-zA-Z\s]+$/,
-                message: "Only English letters are allowed",
+                message: "Only English letters",
               },
             })}
             placeholder="English"
