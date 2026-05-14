@@ -35,6 +35,19 @@ export interface WordsResponse {
   perPage: number;
 }
 
+export interface IAddWordForm {
+  en: string;
+  ua: string;
+  category: string;
+  isIrregular?: boolean;
+}
+
+export interface AddWordFormProps {
+  categories: string[];
+  onSuccess: () => void;
+  onCancel: () => void;
+}
+
 // export interface AuthResponse {
 //   user: User;
 //   token: string;

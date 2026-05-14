@@ -66,7 +66,7 @@ export default function DictionaryPage() {
       try {
         setIsLoading(true);
         const res = await api.get(
-          `/words/all?page=${currentPage}&limit=${limit}&keyword=${searchQuery}&category=${selectedCategory}`,
+          `/words/own?page=${currentPage}&limit=${limit}&keyword=${searchQuery}&category=${selectedCategory}`,
         );
 
         setWords(res.data.results);

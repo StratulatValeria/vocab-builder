@@ -12,14 +12,15 @@
 }
 
 .modal {
-  background-color: #fff;
+  background: var(--green);
   border-radius: 30px;
   position: relative;
   width: 100%;
-  max-width: 522px;
-  max-height: 90vh;
+  max-width: 627px;
+  max-height: 621px;
   overflow-y: auto;
-  padding: 40px;
+  /* можливе редагування падінгу */
+  padding: 64px;
   box-shadow: 0 4px 47px rgba(18, 20, 23, 0.08);
 }
 
@@ -31,12 +32,13 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  color: var(--brand-black);
+  color: #fcfcfc;
   transition: color 0.3s ease;
 }
 
 .closeBtn:hover {
   color: var(--brand-green);
+  opacity: 0.8;
 }
 
 .modal::-webkit-scrollbar {
