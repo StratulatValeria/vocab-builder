@@ -21,7 +21,7 @@ export const AddWordForm = ({
     defaultValues: {
       en: "",
       ua: "",
-      category: "",
+      category: "verb",
       isIrregular: false,
     },
   });
@@ -97,10 +97,10 @@ export const AddWordForm = ({
             className={styles.modalInput}
             error={errors.ua?.message}
             rightElement={
-              <>
+              <div className={styles.langWrapper}>
                 <Icon id="icon-ukraine" size={32} />
                 <span className={styles.langText}>Ukrainian</span>
-              </>
+              </div>
             }
           />
 
@@ -116,10 +116,10 @@ export const AddWordForm = ({
             className={styles.modalInput}
             error={errors.en?.message}
             rightElement={
-              <>
+              <div className={styles.langWrapper}>
                 <Icon id="icon-united-kingdom" size={32} />
                 <span className={styles.langText}>English</span>
-              </>
+              </div>
             }
           />
         </div>

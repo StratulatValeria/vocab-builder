@@ -81,6 +81,7 @@
   border: 1px solid rgba(252, 252, 252, 0.3);
   color: var(--brand-light);
   height: 56px;
+  --focus-border-color: rgba(252, 252, 252, 0.5);
 }
 
 .modalInput::placeholder {
@@ -93,6 +94,9 @@
   color: var(--brand-light);
 }
 
+.modalInput:hover {
+  border-color: rgba(252, 252, 252, 0.5);
+}
 /* Кнопки */
 .formActions {
   display: flex;
@@ -132,4 +136,19 @@
 
 .cancelBtn:hover {
   background-color: rgba(252, 252, 252, 0.1);
+}
+.langWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 105px;
+  justify-content: flex-start;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: #fcfcfc;
+}
+
+.langWrapper svg {
+  flex-shrink: 0;
 }

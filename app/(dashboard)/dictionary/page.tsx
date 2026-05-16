@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 // import { useAuthStore } from "@/lib/store/useAuthStore";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./DictionaryPage.module.css";
@@ -9,6 +9,8 @@ import { Word } from "@/lib/type/types";
 import { Pagination } from "@/components/ui/Pagination/Pagination";
 import { Loader } from "@/components/Loader/Loader";
 import { Select } from "@/components/ui/Select/Select";
+import { Modal } from "@/components/ui/Modal/Modal";
+import { AddWordForm } from "@/components/shared/AddWordForm/AddWordForm";
 
 export default function DictionaryPage() {
   const [words, setWords] = useState<Word[]>([]);
@@ -24,6 +26,8 @@ export default function DictionaryPage() {
   const [totalCount, setTotalCount] = useState(0);
   const limit = 7;
 
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
   const categoryOptions = [
     { value: "", label: "All " },
     ...categories.map((cat) => ({
@@ -31,6 +35,22 @@ export default function DictionaryPage() {
       label: cat.charAt(0).toUpperCase() + cat.slice(1),
     })),
   ];
+
+  const fetchWords = useCallback(async () => {
+    try {
+      setIsLoading(true);
+      const res = await api.get(
+        `/words/own?page=${currentPage}&limit=${limit}&keyword=${searchQuery}&category=${selectedCategory}`,
+      );
+      setWords(res.data.results);
+      setTotalPages(res.data.totalPages || 0);
+      setTotalCount(res.data.totalCount || 0);
+    } catch (error) {
+      console.error("Помилка:", error);
+    } finally {
+      setTimeout(() => setIsLoading(false), 300);
+    }
+  }, [currentPage, searchQuery, selectedCategory]);
 
   useEffect(() => {
     if (inputValue.trim() === "") {
@@ -54,33 +74,18 @@ export default function DictionaryPage() {
       try {
         const res = await api.get("/words/categories");
         setCategories(res.data);
-      } catch (e) {
-        console.error("Помилка категорій:", e);
+      } catch (error) {
+        console.error("Помилка при завантаженні категорій:", error);
       }
     };
+
     fetchCategories();
   }, []);
 
   useEffect(() => {
-    const fetchWords = async () => {
-      try {
-        setIsLoading(true);
-        const res = await api.get(
-          `/words/own?page=${currentPage}&limit=${limit}&keyword=${searchQuery}&category=${selectedCategory}`,
-        );
-
-        setWords(res.data.results);
-        setTotalPages(res.data.totalPages || 0);
-        setTotalCount(res.data.totalCount || 0);
-      } catch (error) {
-        console.error("Помилка слів:", error);
-      } finally {
-        setTimeout(() => setIsLoading(false), 300);
-      }
-    };
-
     fetchWords();
-  }, [currentPage, searchQuery, selectedCategory]);
+  }, [fetchWords]);
+
   return (
     <div className={styles.container}>
       <div className={styles.filtersSection}>
@@ -114,7 +119,10 @@ export default function DictionaryPage() {
           </div>
 
           <div className={styles.actionButtons}>
-            <button className={styles.actionBtn}>
+            <button
+              className={styles.actionBtn}
+              onClick={() => setIsModalOpen(true)}
+            >
               Add word{" "}
               <Icon id="icon-plus" size={20} className="text-[#85AA9F]" />
             </button>
@@ -152,6 +160,16 @@ export default function DictionaryPage() {
           </div>
         )}
       </div>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <AddWordForm
+          categories={categories}
+          onCancel={() => setIsModalOpen(false)}
+          onSuccess={() => {
+            setIsModalOpen(false);
+            if (typeof fetchWords === "function") fetchWords();
+          }}
+        />
+      </Modal>
     </div>
   );
 }

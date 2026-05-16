@@ -27,9 +27,9 @@
   position: absolute;
   top: calc(100% + 4px);
   left: 0;
-  width: 164px;
+  width: 140px;
   max-height: 240px;
-  background: #fff;
+  background: var(--brand-light);
   border-radius: 15px;
   box-shadow: 0 4px 47px 0 rgba(18, 20, 23, 0.08);
   overflow-y: auto;
@@ -41,14 +41,14 @@
   padding: 8px 24px;
   cursor: pointer;
   font-size: 16px;
-  color: var(--black);
+  color: rgba(18, 20, 23, 0.5);
   font-weight: 500;
   line-height: 150%;
   transition: all 0.2s ease;
 }
 
 .option:hover {
-  color: #121417;
+  color: var(--brand-green);
   background-color: rgba(133, 170, 159, 0.1);
 }
 
