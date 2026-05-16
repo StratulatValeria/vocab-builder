@@ -1,11 +1,13 @@
 "use client";
-
+import axios from "axios";
 import { useForm, Controller, useWatch } from "react-hook-form";
 import { Select } from "@/components/ui/Select/Select";
 import { Icon } from "@/components/ui/Icon";
 import { Input } from "@/components/ui/Input/Input";
 import { IAddWordForm, AddWordFormProps } from "@/lib/type/types";
 import styles from "./AddWordForm.module.css";
+import { api } from "@/lib/api/client";
+import { ICreateWordPayload } from "@/lib/type/types";
 
 export const AddWordForm = ({
   categories,
@@ -33,19 +35,36 @@ export const AddWordForm = ({
 
   const onSubmit = async (data: IAddWordForm) => {
     try {
-      const formattedData = {
-        ...data,
-        isIrregular: String(data.isIrregular) === "true",
+      let englishWord = data.en.trim();
+      if (data.category === "verb" && data.isIrregular) {
+        englishWord = englishWord.replace(/\s+/g, "-");
+      }
+
+      const payload: ICreateWordPayload = {
+        en: englishWord,
+        ua: data.ua.trim(),
+        category: data.category,
       };
 
-      console.log("Дані для відправки:", formattedData);
-      // await api.post('/words/create', formattedData);
+      if (data.category === "verb") {
+        payload.isIrregular = !!data.isIrregular;
+      }
+
+      await api.post("/words/create", payload);
       onSuccess();
-    } catch (error) {
-      console.error("Помилка додавання слова:", error);
+    } catch (error: unknown) {
+      console.error("Помилка при додаванні слова:", error);
+
+      if (axios.isAxiosError(error)) {
+        alert(
+          error.response?.data?.message ||
+            "Something went wrong. Please try again.",
+        );
+      } else {
+        alert("An unexpected error occurred.");
+      }
     }
   };
-
   return (
     <div className={styles.formContainer}>
       <h2 className={styles.title}>Add word</h2>

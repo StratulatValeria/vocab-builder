@@ -47,8 +47,9 @@ export interface AddWordFormProps {
   onSuccess: () => void;
   onCancel: () => void;
 }
-
-// export interface AuthResponse {
-//   user: User;
-//   token: string;
-// }
+export interface ICreateWordPayload {
+  en: string;
+  ua: string;
+  category: string;
+  isIrregular?: boolean;
+}
