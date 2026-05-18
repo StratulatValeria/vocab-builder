@@ -3,12 +3,22 @@
 import { useAuthStore } from "@/lib/store/useAuthStore";
 import { Logo } from "@/components/ui/Logo/Logo";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import styles from "./Header.module.css";
 
 export const Header = () => {
   const { isLoggedIn, user, logout } = useAuthStore();
   const pathname = usePathname();
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      router.push("/register");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
 
   return (
     <header className={styles.header}>
@@ -50,9 +60,9 @@ export const Header = () => {
             <>
               <div className={styles.userInfo}>
                 <span className={styles.userName}>{user?.name}</span>
-                <div className={styles.avatar}>{/*  іконка юзера */}</div>
+                <div className={styles.avatar}>{/* іконка юзера */}</div>
               </div>
-              <button onClick={logout} className={styles.logoutBtn}>
+              <button onClick={handleLogout} className={styles.logoutBtn}>
                 Log out →
               </button>
             </>

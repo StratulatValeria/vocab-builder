@@ -11,6 +11,7 @@ import { Loader } from "@/components/Loader/Loader";
 import { Select } from "@/components/ui/Select/Select";
 import { Modal } from "@/components/ui/Modal/Modal";
 import { AddWordForm } from "@/components/shared/AddWordForm/AddWordForm";
+import { EditWordModal } from "@/components/EditWordModal/EditWordModal";
 
 export default function DictionaryPage() {
   const [words, setWords] = useState<Word[]>([]);
@@ -27,6 +28,29 @@ export default function DictionaryPage() {
   const limit = 7;
 
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingWord, setEditingWord] = useState<Word | null>(null);
+
+  const handleEditClick = (word: Word) => {
+    setEditingWord(word);
+    setIsEditModalOpen(true);
+  };
+
+  const handleSaveEditedWord = async (
+    id: string,
+    updatedData: { en: string; ua: string },
+  ) => {
+    try {
+      await api.patch(`/words/edit/${id}`, updatedData);
+
+      setIsEditModalOpen(false);
+      fetchWords();
+    } catch (error) {
+      console.error("Помилка при редагуванні слова:", error);
+      alert("Не вдалося зберегти зміни. Перевірте валідність даних.");
+    }
+  };
 
   const categoryOptions = [
     { value: "", label: "All " },
@@ -62,12 +86,24 @@ export default function DictionaryPage() {
     const handler = setTimeout(() => {
       setSearchQuery(inputValue);
       setCurrentPage(1);
-    }, 500);
+    }, 300);
 
     return () => {
       clearTimeout(handler);
     };
   }, [inputValue]);
+
+  // видалення слова
+
+  const handleDeleteWord = async (id: string) => {
+    try {
+      await api.delete(`/words/delete/${id}`);
+      fetchWords();
+    } catch (error) {
+      console.error("Помилка при видаленні слова:", error);
+      alert("Не вдалося видалити слово. Спробуйте ще раз.");
+    }
+  };
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -148,7 +184,11 @@ export default function DictionaryPage() {
           </div>
         )}
 
-        <WordsTable words={words} />
+        <WordsTable
+          words={words}
+          onDeleteWord={handleDeleteWord}
+          onEditWord={handleEditClick}
+        />
 
         {totalPages > 1 && (
           <div className={styles.paginationSection}>
@@ -170,6 +210,12 @@ export default function DictionaryPage() {
           }}
         />
       </Modal>
+      <EditWordModal
+        word={editingWord}
+        isOpen={isEditModalOpen}
+        onClose={() => setIsEditModalOpen(false)}
+        onSave={handleSaveEditedWord}
+      />
     </div>
   );
 }

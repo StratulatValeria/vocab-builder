@@ -4,12 +4,19 @@ import { useState } from "react";
 import { Word } from "@/lib/type/types";
 import { Icon } from "@/components/ui/Icon";
 import styles from "./WordsTable.module.css";
+import { ProgressCircle } from "../ui/ProgressCircle/ProgressCircle";
 
 interface WordsTableProps {
   words: Word[];
+  onDeleteWord: (id: string) => Promise<void>;
+  onEditWord: (word: Word) => void;
 }
 
-export const WordsTable = ({ words }: WordsTableProps) => {
+export const WordsTable = ({
+  words,
+  onDeleteWord,
+  onEditWord,
+}: WordsTableProps) => {
   const [activeWordId, setActiveWordId] = useState<string | null>(null);
 
   const toggleMenu = (id: string) => {
@@ -51,15 +58,7 @@ export const WordsTable = ({ words }: WordsTableProps) => {
               <td className={styles.td}>{word.ua}</td>
               <td className={styles.td}>{word.category}</td>
               <td className={styles.td}>
-                <div className={styles.progressWrapper}>
-                  <span>{word.progress}%</span>
-                  <div
-                    className={styles.circularProgress}
-                    style={{
-                      background: `conic-gradient(#85AA9F ${word.progress}%, #D1D5DB 0)`,
-                    }}
-                  ></div>
-                </div>
+                <ProgressCircle percentage={word.progress} />
               </td>
               <td className={styles.td}>
                 <div className={styles.actionsWrapper}>
@@ -72,7 +71,13 @@ export const WordsTable = ({ words }: WordsTableProps) => {
 
                   {activeWordId === word._id && (
                     <div className={styles.dropdownMenu}>
-                      <button className={styles.menuItem}>
+                      <button
+                        className={styles.menuItem}
+                        onClick={() => {
+                          onEditWord(word);
+                          setActiveWordId(null);
+                        }}
+                      >
                         <Icon
                           id="icon-edit"
                           size={16}
@@ -80,7 +85,14 @@ export const WordsTable = ({ words }: WordsTableProps) => {
                         />
                         <span>Edit</span>
                       </button>
-                      <button className={styles.menuItem}>
+
+                      <button
+                        className={styles.menuItem}
+                        onClick={() => {
+                          onDeleteWord(word._id);
+                          setActiveWordId(null);
+                        }}
+                      >
                         <Icon
                           id="icon-trash"
                           size={16}

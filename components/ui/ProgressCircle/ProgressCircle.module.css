@@ -1,0 +1,30 @@
+.progressWrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 16px;
+  font-weight: 500;
+  color: #121417;
+}
+
+.svg {
+  transform: rotate(-90deg);
+}
+
+.bgCircle {
+  fill: transparent;
+  stroke: rgba(18, 20, 23, 0.1);
+  stroke-width: 2.5;
+}
+
+.activeCircle {
+  fill: transparent;
+  stroke: var(--brand-green, #85aa9f);
+  stroke-width: 2.5;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.3s ease-in-out;
+}
+
+.text {
+  min-width: 45px;
+}
